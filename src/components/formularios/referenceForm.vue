@@ -3,6 +3,7 @@ import { ref, onMounted } from 'vue';
 
 import useModalStore from '../../stores/modal';
 import useSeccionStore from '../../stores/section';
+import useReferenceStore from '../../stores/reference';
 
 import { getAislesFromAPI } from '../../controller/aisles';
 import { getSectionsByAisleFromAPI } from '../../controller/section';
@@ -12,6 +13,7 @@ import * as Controller from '../../controller/references';
 
 const modalStore = useModalStore();
 const sectionStore = useSeccionStore();
+const referenceStore = useReferenceStore();
 
 const loading = ref(false);
 
@@ -70,7 +72,6 @@ const createReference = async () => {
   const response = await Controller.createReferenceFromApi(reference.value);
   if (!response) { errorMessage.value = 'Error al crear la sección'; return; }
   if (response.error) { errorMessage.value = response.error; return; }
-  sectionStore.addSection(response);
   loading.value = false;
   closeModal();
 };
@@ -105,8 +106,11 @@ onMounted(async () => {
   await getAisles();
   if (modalStore.modalForm === 'edit') {
     loading.value = true;
-    const response = await Controller.getReferencesByIdFromAPI(reference.value.id);
-    if (!response) errorMessage.value = 'Error al cargar la sección';
+    const response = await Controller.getReferencesByIdFromAPI(
+      referenceStore.referenceSelected.referencia_id,
+    );
+    if (!response) errorMessage.value = 'Error al cargar la referencia';
+    console.log(response);
     reference.value = {
       name: response.nombre,
       description: response.descripccion,
@@ -119,6 +123,8 @@ onMounted(async () => {
 
 </script>
 <template>
+{{ reference }}
+
   {{ aisleSelected }}
   {{ sectionSelected  }}
   {{ rackSelected }}

@@ -4,8 +4,9 @@ import { ref, onMounted } from 'vue';
 import useModalStore from '../../stores/modal';
 import useRackStore from '../../stores/racks';
 
-import { getSectionsFromAPI } from '../../controller/section';
+import { getSectionsByAisleFromAPI } from '../../controller/section';
 import { createRackFromAPI, getRackByIdFromAPI, updateRackFromAPI } from '../../controller/rack';
+import { getAislesFromAPI } from '../../controller/aisles';
 
 const modalStore = useModalStore();
 const racksStore = useRackStore();
@@ -18,6 +19,10 @@ const rack = ref({
   description: '',
   section_id: '',
 });
+
+const aisles = ref([]);
+const aisleSelected = ref('');
+
 const sections = ref([]);
 const loading = ref(false);
 
@@ -35,12 +40,20 @@ const createRack = async () => {
   closeModal();
 };
 
-const getSections = async () => {
+const getSectionsByAisle = async () => {
   loading.value = true;
-  const response = await getSectionsFromAPI();
+  const response = await getSectionsByAisleFromAPI(aisleSelected.value);
   loading.value = false;
   if (!response) errorMessage.value = 'Error al cargar las secciones';
   sections.value = response;
+};
+
+const getAisles = async () => {
+  loading.value = true;
+  const response = await getAislesFromAPI();
+  loading.value = false;
+  if (!response) errorMessage.value = 'Error al cargar los pasillos';
+  aisles.value = response;
 };
 
 const updateRack = async () => {
@@ -62,7 +75,7 @@ const submitForm = async () => {
 };
 
 onMounted(async () => {
-  await getSections();
+  await getAisles();
   if (modalStore.modalForm === 'edit') {
     loading.value = true;
     const response = await getRackByIdFromAPI(racksStore.rackSelected);
@@ -99,6 +112,21 @@ onMounted(async () => {
      <form @submit.prevent="submitForm">
 
       <fieldset>
+        {{ aisles }}
+        {{ aisleSelected  }}
+        <label for="aisle">Pasillo asignado</label>
+        <select
+        @change="getSectionsByAisle"
+          name="aisle_id"
+          id="aisle_id"
+          v-model="aisleSelected">
+          <option v-for="aisle in aisles" :key="aisle.id" :value="aisle.pasillo_id">
+            Pasillo: {{ aisle.nombre }} - {{ aisle.descripccion }}
+          </option>
+        </select>
+      </fieldset>
+
+      <fieldset  v-if="sections.length >0">
         <label for="section">Sección asignada</label>
         <select name="seccion_id" id="seccion_id" v-model="rack.section_id">
           <option v-for="section in sections" :key="section.id" :value="section.id">

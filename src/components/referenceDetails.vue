@@ -3,7 +3,9 @@ import { ref, onBeforeMount } from 'vue';
 import { getReferencesFromApi, searchReference } from '../controller/references';
 
 import useModalStore from '../stores/modal';
+import useReferenceStore from '../stores/reference';
 
+const referenceStore = useReferenceStore();
 const modalStore = useModalStore();
 
 const loading = ref(false);
@@ -11,26 +13,40 @@ const referencesList = ref([]);
 const errorMessage = ref(false);
 const reference = ref('');
 
+const rawReferencesList = ref([]);
+
 const addReference = async () => {
   modalStore.modalActive = true;
   modalStore.modalType = 'reference';
   modalStore.modalTitle = 'Añadir referencia';
   modalStore.modalForm = 'add';
 };
+
+const editReference = async () => {
+  modalStore.modalActive = true;
+  modalStore.modalType = 'reference';
+  modalStore.modalTitle = 'Editar referencia';
+  modalStore.modalForm = 'edit';
+
+  [referenceStore.referenceSelected] = referencesList.value;
+};
+
 const search = async () => {
   errorMessage.value = '';
+  referencesList.value = [];
+  rawReferencesList.value = [];
   if (reference.value === ' ' || reference.value === '') {
-    referencesList.value = [];
+    const response = await getReferencesFromApi();
+    rawReferencesList.value = response;
+    loading.value = false;
     return;
   }
 
   loading.value = true;
   const response = await searchReference(reference.value);
-  console.log(response);
   loading.value = false;
-
   if (!response) {
-    errorMessage.value = 'Error al cargar las referencias';
+    errorMessage.value = 'No se ha encontrado la referencia';
     loading.value = false;
   }
   referencesList.value = response;
@@ -46,11 +62,9 @@ onBeforeMount(async () => {
     loading.value = false;
   }
 });
-
 </script>
 
 <template>
-
   <section class="references">
     <form @submit.prevent="search">
       <fieldset class="search">
@@ -64,17 +78,29 @@ onBeforeMount(async () => {
         <input type="submit" value="🔎" />
       </fieldset>
       <fieldset>
-        <input type="button" value="añadir" @click="addReference">
+        <input type="button" value="añadir" @click="addReference" />
       </fieldset>
     </form>
-    <ul>
+    <ul v-if="referencesList.length > 0">
+      <h2>
+        Referencia: {{ referencesList[0].referencia }}
+        <input type="button" class="btn delete" value="Eliminar" />
+      </h2>
 
-        <li v-for="reference in referencesList" :key="reference.id">
-          <a>
-            Pasillo: {{ reference.pasillo_nombre }} -
-            Sección: {{ reference.seccion_nombre }} -
-            Altura: {{ reference.altura_nombre }}</a>
-        </li>
+      <li v-for="reference in referencesList" :key="reference.id">
+
+        <a>
+          Pasillo: {{ reference.pasillo_nombre }} - Sección: {{ reference.seccion_nombre }} -
+          Altura: {{ reference.altura_nombre }}
+          <input type="button" class="btn delete" value="Eliminar" />
+        </a>
+      </li>
+    </ul>
+    <ul v-if="rawReferencesList.length > 0">
+      <h2>Listado de referencias</h2>
+      <li v-for="reference in rawReferencesList" :key="reference.id">
+        <a> referencia: {{ reference.referencia }} </a>
+      </li>
     </ul>
     <section class="error" v-if="errorMessage">
       <p>{{ errorMessage }}</p>
@@ -82,7 +108,6 @@ onBeforeMount(async () => {
     <section class="loading" v-else-if="loading">
       <div class="spinner"></div>
       <p>Cargando referencias</p>
-
     </section>
 
     <section v-else-if="referencesList.length < 0">No hay referencias</section>
@@ -111,7 +136,7 @@ fieldset.search {
 }
 
 fieldset.search:focus-within {
-  outline:3px solid orange;
+  outline: 3px solid orange;
 }
 
 input[type='search'] {
@@ -131,8 +156,7 @@ input[type='submit'] {
   outline: none;
 }
 
-section.references form{
+section.references form {
   display: flex;
 }
-
 </style>

@@ -1,12 +1,10 @@
-import { ref } from 'vue'
-import { defineStore } from 'pinia'
+import { ref } from 'vue';
+import { defineStore } from 'pinia';
 
-export const useReferenceStore = defineStore('reference', () => {
-  const reference = ref('')
-  const referenceList = ref([])
-  const setReference = (ref) => {
-    referenceList.value.push(ref)
-  }
+export default defineStore('reference', () => {
+  const reference = ref('');
+  const referenceList = ref([]);
+  const referenceSelected = ref(null);
 
-  return { reference, referenceList, setReference }
-})
+  return { reference, referenceList, referenceSelected };
+});

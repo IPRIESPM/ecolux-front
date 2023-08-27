@@ -74,3 +74,28 @@ export const createReferenceFromApi = async (reference) => {
     return false;
   }
 };
+
+export const getReferencesByIdFromAPI = async (id) => {
+  const url = `${serverPath}/${id}`;
+  try {
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (response.status === 304) {
+      return 304;
+    }
+
+    if (!response.ok) {
+      return false;
+    }
+
+    const responseData = await response.json();
+    return responseData;
+  } catch (error) {
+    return false;
+  }
+};

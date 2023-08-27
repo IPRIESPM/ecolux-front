@@ -13,7 +13,9 @@
   transition: 0.4s;
 
 }
-
+.delete {
+  background: var(--color-cancel);
+}
 h2.button{
   display:flex;
   justify-content: space-between;
