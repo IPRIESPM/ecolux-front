@@ -1,11 +1,15 @@
 <script setup>
 import { ref, onBeforeMount } from 'vue';
-import { getReferencesFromApi, searchReference } from '../controller/references';
+import {
+  getReferencesFromApi,
+  searchReference,
+  deleteReferenceFromAPI,
+  deleteReferenceRackFromAPI,
+}
+  from '../controller/references';
 
 import useModalStore from '../stores/modal';
-import useReferenceStore from '../stores/reference';
 
-const referenceStore = useReferenceStore();
 const modalStore = useModalStore();
 
 const loading = ref(false);
@@ -22,13 +26,18 @@ const addReference = async () => {
   modalStore.modalForm = 'add';
 };
 
-const editReference = async () => {
-  modalStore.modalActive = true;
-  modalStore.modalType = 'reference';
-  modalStore.modalTitle = 'Editar referencia';
-  modalStore.modalForm = 'edit';
+const deleteReference = async (id) => {
+  const response = await deleteReferenceFromAPI(id);
+};
 
-  [referenceStore.referenceSelected] = referencesList.value;
+const deleteReferenceRack = async (id) => {
+  console.log(id);
+  let response = await deleteReferenceRackFromAPI(id);
+  console.log(response);
+  if (response) {
+    response = await searchReference(reference.value);
+    referencesList.value = response;
+  }
 };
 
 const search = async () => {
@@ -84,15 +93,21 @@ onBeforeMount(async () => {
     <ul v-if="referencesList.length > 0">
       <h2>
         Referencia: {{ referencesList[0].referencia }}
-        <input type="button" class="btn delete" value="Eliminar" />
+        <input
+          type="button"
+          class="btn delete"
+          value="Eliminar"
+          @click="deleteReference(referencesList[0].id)" />
       </h2>
 
       <li v-for="reference in referencesList" :key="reference.id">
-
         <a>
           Pasillo: {{ reference.pasillo_nombre }} - Sección: {{ reference.seccion_nombre }} -
           Altura: {{ reference.altura_nombre }}
-          <input type="button" class="btn delete" value="Eliminar" />
+          <input
+            type="button"
+            class="btn delete"
+            value="Eliminar" @click="deleteReferenceRack(reference.id_referencia_altura)" />
         </a>
       </li>
     </ul>
@@ -100,6 +115,9 @@ onBeforeMount(async () => {
       <h2>Listado de referencias</h2>
       <li v-for="reference in rawReferencesList" :key="reference.id">
         <a> referencia: {{ reference.referencia }} </a>
+        <input
+          type="button"
+          @click="deleteReference(reference.id)" value="Eliminar" class="btn delete">
       </li>
     </ul>
     <section class="error" v-if="errorMessage">

@@ -53,8 +53,8 @@ watch(() => modalStore.modalType, (newValue) => {
 
         width: 100vw;
         height: 100vh;
-
-        background: var(--color-background-mute);
+        background: #f7f7f7a8;
+        z-index: 2;
     }
     main.modal_content{
         position: absolute;
@@ -65,10 +65,12 @@ watch(() => modalStore.modalType, (newValue) => {
         width: 80%;
         height: 80%;
 
-        background: var(--color-background);
+        background: var(--background-gray);
         border-radius: 1rem;
+        box-shadow: 0 0 10px rgba(0,0,0,0.5);
 
         padding: 1rem;
+        overflow: auto;
     }
     header.modal{
         display: flex;

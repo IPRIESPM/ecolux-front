@@ -1,5 +1,5 @@
 <script setup>
-import ReferenceDetails from '../components/referenceDetails.vue'
+import ReferenceDetails from '../components/referenceDetails.vue';
 </script>
 
 <template>

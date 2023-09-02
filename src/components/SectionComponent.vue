@@ -5,6 +5,8 @@ import useSectionsStore from '../stores/section';
 import useModalStore from '../stores/modal';
 import useAislesStore from '../stores/aisles';
 import { getSectionsFromAPI } from '../controller/section';
+import ActionButton from './buttons/ActionButton.vue';
+import LoadingComponent from './LoadingComponent.vue';
 
 const sectionsStore = useSectionsStore();
 const aisleStore = useAislesStore();
@@ -63,15 +65,21 @@ watch(() => aisleStore.aisles.length, async (data) => {
 
 <template>
   <section class="sections">
-    <h2 class="button">
+    <LoadingComponent v-if="loading" />
+
+    <h2 class="button" v-else>
       <span @click="openList">
         Secciones:
         <span v-if="sections.length > 0">{{ sections.length }}</span>
       </span>
-      <button v-if="!deactivated" class="btn" @click="addSection">Añadir</button>
+      <ActionButton @click="addSection" action="add" />
     </h2>
-    <section class="loading" v-if="loading">
-      <p>Cargando...</p>
-    </section>
   </section>
+  <FooterComponent />
 </template>
+
+<style scoped>
+h2.button{
+  display: flex;
+  gap: 1rem;
+}</style>

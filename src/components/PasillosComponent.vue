@@ -3,6 +3,8 @@ import { ref, onMounted, watch } from 'vue';
 import useAislesStore from '../stores/aisles';
 import { getAislesFromAPI } from '../controller/aisles';
 import useModalStore from '../stores/modal';
+import ActionButton from './buttons/ActionButton.vue';
+import LoadingComponent from './LoadingComponent.vue';
 
 const modalStore = useModalStore();
 const aisleStore = useAislesStore();
@@ -50,28 +52,20 @@ watch(() => aisleStore.aisles, async (data) => {
 </script>
 <template>
     <section class="aisles">
-        <h2 class="button">
+      <LoadingComponent v-if="loading" />
+        <h2 class="button" v-else>
           <span @click="openList">Pasillos:
             <span v-if="aisles.length >0">{{ aisles.length }}</span>
           </span>
-          <button class="btn" @click="addAisle">Añadir</button>
+          <ActionButton @click="addAisle" action="add" />
         </h2>
-        <section class="loading" v-if="loading">
-            <p>Cargando...</p>
-        </section>
-        <section class="error" v-if="errorMessage">
-            <p>{{ errorMessage }}</p>
-        </section>
-        <section class="noData" v-else-if=" aisles.length===0">
-            <p>No se encontraron pasillos</p>
-        </section>
+
       </section>
 </template>
 
 <style scoped>
-  li {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
+h2.button{
+  display: flex;
+  gap: 1rem;
+}
 </style>

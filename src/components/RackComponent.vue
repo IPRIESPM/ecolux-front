@@ -4,9 +4,10 @@ import { ref, watch, onMounted } from 'vue';
 import useSectionsStore from '../stores/section';
 import useModalStore from '../stores/modal';
 import useRackStore from '../stores/racks';
-
+import ActionButton from './buttons/ActionButton.vue';
 import { getSectionsFromAPI } from '../controller/section';
 import { getRacksFromAPI } from '../controller/rack';
+import LoadingComponent from './LoadingComponent.vue';
 
 const sectionsStore = useSectionsStore();
 const racksStore = useRackStore();
@@ -76,15 +77,20 @@ watch(() => sectionsStore.sections.length, async (data) => {
 
 <template>
   <section class="racks">
-    <h2 class="button">
+    <LoadingComponent v-if="loading" />
+    <h2 class="button" v-else>
       <span @click="openList">
         Alturas:
         <span v-if="racks.length > 0">{{ racks.length }}</span>
       </span>
-      <button v-if="!deactivated" class="btn" @click="addRack">Añadir</button>
+      <ActionButton action="add" @click="addRack"/>
     </h2>
-    <section class="loading" v-if="loading">
-      <p>Cargando...</p>
-    </section>
+
   </section>
 </template>
+<style scoped>
+h2.button{
+  display: flex;
+  gap: 1rem;
+}
+</style>

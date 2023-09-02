@@ -123,11 +123,7 @@ onMounted(async () => {
 
 </script>
 <template>
-{{ reference }}
 
-  {{ aisleSelected }}
-  {{ sectionSelected  }}
-  {{ rackSelected }}
   <section class="error" v-if="errorMessage">
     <p>{{ errorMessage }}</p>
   </section>

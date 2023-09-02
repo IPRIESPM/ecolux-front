@@ -1,33 +1,25 @@
 <script setup>
 import ReferenceDetails from './components/referenceDetails.vue';
 import HeaderComponent from './components/HeaderComponent.vue';
-import PasillosComponent from './components/PasillosComponent.vue';
-import SectionComponent from './components/SectionComponent.vue';
-import AlturaComponent from './components/AlturaComponent.vue';
 import ModalComponent from './components/ModalComponent.vue';
+import NavComponent from './components/NavComponent.vue';
+import LastReferencesComponent from './components/LastReferencesComponent.vue';
 
 </script>
 
 <template>
   <ModalComponent />
   <HeaderComponent />
-  <section class="aside">
-    <PasillosComponent />
-    <SectionComponent />
-    <AlturaComponent />
-  </section>
+  <NavComponent />
+  <main>
+    <LastReferencesComponent />
+  </main>
   <ReferenceDetails />
 </template>
-
 <style scoped>
-section.aside{
-  display: flex;
-  justify-content: space-around;
-  gap: 3rem;
-  padding: 2rem;
-}
 
-section.aside section{
-  min-width: 12rem;
+main{
+  padding: 1rem;
+
 }
 </style>

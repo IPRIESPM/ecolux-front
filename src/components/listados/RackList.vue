@@ -51,7 +51,7 @@ onMounted(async () => {
   <ul v-if="!loading">
     <li v-for="rack in rackStore.racks" :key="rack.id">
       <section>
-        <h3>{{ rack.id }} - Altura: {{ rack.nombre }}</h3>
+        <h3>Altura: {{ rack.nombre }}</h3>
         <p>{{ rack.descripccion }}</p>
       </section>
       <fieldset>

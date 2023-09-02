@@ -99,3 +99,54 @@ export const getReferencesByIdFromAPI = async (id) => {
     return false;
   }
 };
+
+export const deleteReferenceFromAPI = async (id) => {
+  try {
+    const url = `${serverPath}/${id}`;
+    const response = await fetch(url, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (response.status === 304) {
+      return 304;
+    }
+
+    if (!response.ok) {
+      return false;
+    }
+
+    const responseData = await response.json();
+    return responseData;
+  } catch (error) {
+    return false;
+  }
+};
+
+export const deleteReferenceRackFromAPI = async (id) => {
+  try {
+    const serverPath1 = 'http://localhost:3030/alturaReferencia';
+    const url = `${serverPath1}/${id}`;
+    const response = await fetch(url, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (response.status === 304) {
+      return 304;
+    }
+
+    if (!response.ok) {
+      return false;
+    }
+
+    const responseData = await response.json();
+    return responseData;
+  } catch (error) {
+    return false;
+  }
+};

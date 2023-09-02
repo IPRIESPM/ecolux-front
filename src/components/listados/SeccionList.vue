@@ -50,7 +50,7 @@ onMounted(async () => {
   <ul v-if="!loading">
     <li v-for="section in sectionStore.sections" :key="section.id">
       <section>
-        <h3>{{ section.id }} - Section: {{ section.nombre }}</h3>
+        <h3>Sección: {{ section.nombre }}</h3>
         <p>{{ section.descripccion }}</p>
       </section>
       <fieldset>

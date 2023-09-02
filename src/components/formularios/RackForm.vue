@@ -35,6 +35,7 @@ const createRack = async () => {
   const response = await createRackFromAPI(rack.value);
   if (!response) { errorMessage.value = 'Error al crear la sección'; return; }
   if (response.error) { errorMessage.value = response.error; return; }
+  console.log(response);
   racksStore.addRack(response);
   loading.value = false;
   closeModal();
@@ -112,8 +113,6 @@ onMounted(async () => {
      <form @submit.prevent="submitForm">
 
       <fieldset>
-        {{ aisles }}
-        {{ aisleSelected  }}
         <label for="aisle">Pasillo asignado</label>
         <select
         @change="getSectionsByAisle"
@@ -137,7 +136,7 @@ onMounted(async () => {
 
       <fieldset>
         <label for="name">Nombre</label>
-        <input type="text" id="name" v-model="rack.name" />
+        <input type="name" id="name" v-model="rack.name" />
         <label for="description">Descripción</label>
         <textarea id="description" v-model="rack.description" rows="5"></textarea>
       </fieldset>
