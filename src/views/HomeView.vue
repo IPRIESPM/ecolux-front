@@ -1,9 +1,14 @@
 <script setup>
-import ReferenceDetails from '../components/referenceDetails.vue';
+import HeaderComponent from '../components/HeaderComponent.vue';
+import ModalComponent from '../components/ModalComponent.vue';
+import NavComponent from '../components/NavComponent.vue';
+
 </script>
 
 <template>
+  <ModalComponent />
+  <HeaderComponent />
+  <NavComponent />
   <main>
-    <ReferenceDetails />
   </main>
 </template>

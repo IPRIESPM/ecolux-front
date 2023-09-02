@@ -1,25 +1,28 @@
 import { ref } from 'vue';
 import { defineStore } from 'pinia';
 
-const useModalStore = defineStore('modal', () => {
-  const modalActive = ref(false);
+export default defineStore('modal', () => {
+  const showModal = ref(false);
+  const modalText = ref('');
   const modalType = ref('');
-  const modalTitle = ref('');
-  const modalForm = ref('');
 
-  function closeModal() {
-    modalActive.value = false;
+  const closeModal = () => {
+    showModal.value = false;
+    modalText.value = '';
     modalType.value = '';
-    modalTitle.value = '';
-    modalForm.value = '';
-  }
+  };
+
+  const openModal = (text, type) => {
+    modalText.value = text;
+    modalType.value = type;
+    showModal.value = true;
+  };
+
   return {
-    modalActive,
+    showModal,
+    modalText,
     modalType,
-    modalTitle,
-    modalForm,
     closeModal,
+    openModal,
   };
 });
-
-export default useModalStore;

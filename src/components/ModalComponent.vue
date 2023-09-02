@@ -1,81 +1,60 @@
+<!-- eslint-disable import/extensions -->
+<!-- eslint-disable import/no-unresolved -->
 <script setup>
-import { ref, watch } from 'vue';
-import PasilloForm from './formularios/PasilloForm.vue';
-import PasillosList from './listados/PasillosList.vue';
-import SeccionForm from './formularios/SeccionForm.vue';
-import useModalStore from '../stores/modal';
-import SectionsList from './listados/SeccionList.vue';
-import RackForm from './formularios/RackForm.vue';
-import RackList from './listados/RackList.vue';
-import ReferenceForm from './formularios/referenceForm.vue';
+import useModalStore from '@/stores/modal';
+import LoginComponent from './LoginComponent.vue';
+import LogOutComponent from './LogOutComponent.vue';
+import AisleForm from './aisleForm.vue';
+import SectionForm from './SectionForm.vue';
+import RackForm from './RackForm.vue';
+import ReferenceForm from './ReferenceForm.vue';
 
 const modalStore = useModalStore();
-const modalActive = ref(false);
-const modalType = ref('');
-const modalTitle = ref('');
-
-const closeModal = () => {
-  modalStore.closeModal();
-};
-
-watch(() => modalStore.modalType, (newValue) => {
-  modalActive.value = newValue;
-  modalType.value = modalStore.modalType;
-  modalTitle.value = modalStore.modalTitle;
-});
 
 </script>
-
 <template>
-    <section class="modal" v-if="modalActive">
-        <main class="modal_content">
-            <header class="modal">
-                <h2>{{ modalTitle }}</h2>
-                <button class="btn" @click="closeModal">Cerrar</button>
-            </header>
-            <section class="form">
-                <PasilloForm v-if="modalType==='aisle'" />
-                <PasillosList v-if="modalType==='listAisle'" />
-                <SeccionForm v-if="modalType==='section'" />
-                <SectionsList v-if="modalType==='listSection'" />
-                <RackForm v-if="modalType==='rack'" />
-                <RackList v-if="modalType==='listRack'" />
-                <ReferenceForm v-if="modalType==='reference'" />
-            </section>
-        </main>
+  <section class="modal" v-if="modalStore.showModal">
+    <section class="modal-body">
+      <section class="modal-header">
+        <h2>{{ modalStore.modalText }}</h2>
+      </section>
+      <section class="modal-main">
+        <LoginComponent v-if="modalStore.modalType === 'login'" />
+        <LogOutComponent v-if="modalStore.modalType === 'logout'" />
+        <AisleForm v-if="modalStore.modalType === 'aisle'" />
+        <SectionForm v-if="modalStore.modalType === 'section'" />
+        <RackForm v-if="modalStore.modalType === 'rack'" />
+        <ReferenceForm v-if="modalStore.modalType === 'reference'" />
+      </section>
     </section>
+  </section>
 </template>
 <style scoped>
-    section.modal{
-        position: absolute;
-        top: 0;
-        left: 0;
+section.modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
 
-        width: 100vw;
-        height: 100vh;
-        background: #f7f7f7a8;
-        z-index: 2;
-    }
-    main.modal_content{
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
+  display: grid;
+  place-items: center;
 
-        width: 80%;
-        height: 80%;
+  background: #f7f7f7c2;
 
-        background: var(--background-gray);
-        border-radius: 1rem;
-        box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  section.modal-header {
+    display: grid;
+    place-items: center;
+  }
 
-        padding: 1rem;
-        overflow: auto;
-    }
-    header.modal{
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 1rem 0;
-    }
+  section.modal-body {
+    padding: 18px;
+    /* width: 80%;
+    height: 80%; */
+    background: var(--gray);
+    border-radius: var(--border-radius, 6px);
+    background: var(--background, #f7f7f7);
+    box-shadow: 4px 3px 4px 4px rgba(0, 0, 0, 0.25);
+  }
+}
 </style>
