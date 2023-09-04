@@ -27,19 +27,6 @@ const section = ref({
 
 const closeModal = () => {
   modalStore.closeModal();
-  errorLoading.value = null;
-};
-
-const onSubmit = async () => {
-  loading.value = true;
-  const response = await createSection(section.value);
-  if (!response) {
-    loading.value = false;
-    errorLoading.value = 'Ha ocurrido un error al crear la sección';
-    return;
-  }
-  loading.value = false;
-  closeModal();
 };
 
 onBeforeMount(async () => {
