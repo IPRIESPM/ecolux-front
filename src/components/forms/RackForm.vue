@@ -4,7 +4,7 @@ import ButtonComponent from '@/components/ButtonComponent.vue';
 
 import { getAisles } from '@/services/aisles';
 import { getSectionsByAisleId } from '@/services/sections';
-import { createRack } from '@/services/racks';
+import { createRack, getRackById, updateRack } from '@/services/racks';
 
 import useModalStore from '@/stores/modal';
 import useUserStore from '@/stores/user';
@@ -16,6 +16,7 @@ const loading = ref(false);
 const errorLoading = ref(null);
 const aisles = ref([]);
 const sections = ref([]);
+const error = ref('');
 
 const rack = ref({
   aisle: '',
@@ -31,11 +32,16 @@ const closeModal = () => {
 
 const onSubmit = async () => {
   loading.value = true;
-  const response = await createRack(rack.value);
-  if (!response) {
-    loading.value = false;
-    errorLoading.value = 'Ha ocurrido un error al crear el rack';
-    return;
+  if (modalStore.editMode) {
+    const response = await updateRack(rack.value);
+    if (!response) { error.value = 'Error al actualizar el rack'; loading.value = false; return; }
+  } else {
+    const response = await createRack(rack.value);
+    if (!response) {
+      loading.value = false;
+      errorLoading.value = 'Ha ocurrido un error al crear el rack';
+      return;
+    }
   }
   loading.value = false;
   closeModal();
@@ -55,17 +61,40 @@ const getSection = async () => {
 
 onBeforeMount(async () => {
   loading.value = true;
-  const response = await getAisles();
-  if (!response) {
+  if (modalStore.editMode) {
+    const data = {
+      id: modalStore.id,
+    };
+    const response = await getRackById(data);
+    if (!response) {
+      errorLoading.value = 'Error al obtener la sección';
+      return;
+    }
+    const {
+      nombre, descripccion, id, seccion_id: section,
+    } = response;
+    rack.value = {
+      aisle: '',
+      section,
+      name: nombre,
+      description: descripccion,
+      id,
+      token: userStore.token,
+    };
     loading.value = false;
-    errorLoading.value = 'Ha ocurrido un error al cargar los pasillos';
-    return;
+  } else {
+    const response = await getAisles();
+    if (!response) {
+      loading.value = false;
+      errorLoading.value = 'Ha ocurrido un error al cargar los pasillos';
+      return;
+    }
+    aisles.value = response;
+    if (aisles.value.length === 0) {
+      errorLoading.value = 'No hay pasillos registrados';
+    }
+    loading.value = false;
   }
-  aisles.value = response;
-  if (aisles.value.length === 0) {
-    errorLoading.value = 'No hay pasillos registrados';
-  }
-  loading.value = false;
 });
 </script>
 
@@ -74,7 +103,7 @@ onBeforeMount(async () => {
     <section class="spinner" v-if="loading"></section>
     <section class="error" v-else-if="errorLoading">{{ errorLoading }}</section>
     <section class="form" @submit.prevent="onSubmit" v-else>
-      <fieldset>
+      <fieldset v-if="!modalStore.editMode">
         <fieldset>
           <label for="aisle">Selecciona el pasillo</label>
           <select name="aisle" id="aisle" v-model="rack.aisle" @change="getSection">
@@ -97,7 +126,7 @@ onBeforeMount(async () => {
       </fieldset>
       <fieldset>
         <fieldset>
-          <label for="aisle">Nombre</label>
+          <label for="name">Nombre</label>
           <input type="number" name="name" id="name" placeholder="00" min="0" v-model="rack.name" />
         </fieldset>
         <fieldset>

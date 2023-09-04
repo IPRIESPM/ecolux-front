@@ -9,7 +9,10 @@ import AisleForm from '@/components/forms/AisleForm.vue';
 import SectionForm from '@/components/forms/SectionForm.vue';
 import RackForm from '@/components/forms/RackForm.vue';
 import ReferenceForm from '@/components/forms/ReferenceForm.vue';
+
 import AisleList from './lists/aisleList.vue';
+import SectionsList from './lists/SectionsList.vue';
+import RacksList from './lists/RacksList.vue';
 
 const modalStore = useModalStore();
 
@@ -27,9 +30,11 @@ const modalStore = useModalStore();
         <AisleForm v-if="modalStore.modalType === 'aisleForm'" />
         <SectionForm v-if="modalStore.modalType === 'sectionForm'" />
         <RackForm v-if="modalStore.modalType === 'rackForm'" />
-        <ReferenceForm v-if="modalStore.modalType === 'referenceForm'" />
+        <ReferenceForm v-if="modalStore.modalType === 'reference'" />
 
         <AisleList v-if="modalStore.modalType === 'aisle'" />
+        <SectionsList v-if="modalStore.modalType === 'section'" />
+        <RacksList v-if="modalStore.modalType === 'rack'" />
 
       </section>
     </section>

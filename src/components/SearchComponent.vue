@@ -21,7 +21,7 @@ const searchReference = async () => {
   <section class="search">
     <h3>Buscador de referencias</h3>
     <form @submit.prevent="searchReference">
-      <input type="text" placeholder="Introduce una referencia" v-model="searching" />
+      <input type="search" placeholder="Introduce una referencia" v-model="searching" />
     </form>
   </section>
 </template>

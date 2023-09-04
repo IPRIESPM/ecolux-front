@@ -41,9 +41,5 @@ ul {
 li {
     font-weight: 600;
 
-    span {
-        text-decoration: underline;
-    }
-
 }
 </style>

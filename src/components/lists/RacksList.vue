@@ -1,8 +1,9 @@
 <!-- eslint-disable no-alert -->
 <script setup>
 import { onBeforeMount, ref } from 'vue';
-import { getSections, deleteSectionFromApi } from '@/services/sections';
+import { getSections } from '@/services/sections';
 import { getAisles } from '@/services/aisles';
+import { getRacksBySectionId, deleteRackFromApi } from '@/services/racks';
 import ButtonComponent from '@/components/ButtonComponent.vue';
 import useModalStore from '@/stores/modal';
 import useUserStore from '@/stores/user';
@@ -14,6 +15,13 @@ const loading = ref(false);
 const error = ref('');
 const sections = ref([]);
 const aisles = ref([]);
+const racks = ref([]);
+
+const selectedData = ref({
+  aisle: '',
+  section: '',
+});
+
 const openEditForm = (text, type, id) => {
   modalStore.openModal(text, type, true);
   modalStore.id = id;
@@ -31,6 +39,18 @@ const getSection = async (aisleId) => {
   loading.value = false;
 };
 
+const getRacks = async () => {
+  loading.value = true;
+  const response = await getRacksBySectionId(selectedData.value.section);
+  if (!response) {
+    loading.value = false;
+    error.value = 'Error al cargar los racks';
+    return;
+  }
+  racks.value = response;
+  loading.value = false;
+};
+
 const openForm = (text, type) => {
   modalStore.openModal(text, type);
 };
@@ -38,8 +58,8 @@ const closeModal = () => {
   modalStore.closeModal();
 };
 
-const deleteSection = async (id) => {
-  const checkConfirm = window.confirm('¿Estas seguro de borrar esta sección?');
+const deleteRack = async (id) => {
+  const checkConfirm = window.confirm('¿Estas seguro de borrar esta altura?');
   if (!checkConfirm) {
     return;
   }
@@ -49,14 +69,14 @@ const deleteSection = async (id) => {
     token: userStore.token,
   };
   loading.value = true;
-  const response = await deleteSectionFromApi(data);
+  const response = await deleteRackFromApi(data);
   if (!response) {
-    error.value = 'Error al borrar el pasillo';
+    error.value = 'Error al borrar la altura';
     loading.value = false;
     return;
   }
   loading.value = false;
-  sections.value = sections.value.filter((section) => section.id !== id);
+  racks.value = racks.value.filter((rack) => rack.id !== id);
 };
 
 onBeforeMount(async () => {
@@ -78,15 +98,25 @@ onBeforeMount(async () => {
       <a class="buttons header">
         <fieldset>
           <label for="aisle">Selecciona el pasillo</label>
-          <select name="aisle" id="aisle" @change="getSection">
+          <select name="aisle" id="aisle" @change="getSection" v-model="selectedData.aisle">
             <option value="" disabled selected>Selecciona un pasillo</option>
             <option v-for="aisle in aisles" :key="aisle.pasillo_id" :value="aisle.pasillo_id">
               Pasillo - {{ aisle.nombre }}
             </option>
           </select>
         </fieldset>
+
+        <fieldset v-if="sections.length > 0">
+          <label for="aisle">Selecciona la sección</label>
+          <select name="section" id="section" @change="getRacks" v-model="selectedData.section">
+            <option value="" disabled selected>Selecciona una sección</option>
+            <option v-for="section in sections" :key="section.id" :value="section.id">
+              Sección - {{ section.nombre }}
+            </option>
+          </select>
+        </fieldset>
         <ButtonComponent
-          @click="openForm('Nueva seccion', 'sectionForm')"
+          @click="openForm('Nueva altura', 'rackForm')"
           :confirm="true"
           title="Crear"
         />
@@ -99,16 +129,16 @@ onBeforeMount(async () => {
         <a>Descripccion</a>
         <a>Opciones</a>
       </section>
-      <article v-for="section in sections" :key="section.id">
-        <a>{{ section.nombre }}</a>
-        <a>{{ section.descripccion ? section.descripccion : '-' }}</a>
+      <article v-for="rack in racks" :key="rack.id">
+        <a>{{ rack.nombre }}</a>
+        <a>{{ rack.descripccion ? rack.descripccion : '-' }}</a>
         <a class="buttons">
           <ButtonComponent
             title="Editar"
-            @click="openEditForm('Editar sección', 'sectionForm', section.id)"
+            @click="openEditForm('Editar altura', 'rackForm', rack.id)"
             :confirm="true"
           />
-          <ButtonComponent title="Borrar"  @click="deleteSection(section.id)" :delete="true" />
+          <ButtonComponent title="Borrar"  @click="deleteRack(rack.id)" :delete="true" />
         </a>
       </article>
     </section>

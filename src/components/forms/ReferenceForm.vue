@@ -116,7 +116,7 @@ onBeforeMount(async () => {
           </select>
         </fieldset>
       </fieldset>
-      <fieldset v-if="racks.rack !== ''">
+      <fieldset v-if="reference.rack || reference.rack.length > 0">
         <fieldset>
           <label for="aisle">Número</label>
           <input

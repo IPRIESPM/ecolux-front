@@ -8,7 +8,7 @@ import useModalStore from '@/stores/modal';
 import useUserStore from '@/stores/user';
 
 import { getAisles } from '@/services/aisles';
-import { createSection } from '@/services/sections';
+import { createSection, getSectionById, updateSection } from '@/services/sections';
 
 const userStore = useUserStore();
 const modalStore = useModalStore();
@@ -16,6 +16,7 @@ const modalStore = useModalStore();
 const aisles = ref([]);
 const errorLoading = ref(null);
 const loading = ref(false);
+const error = ref('');
 
 const section = ref({
   name: '',
@@ -32,11 +33,16 @@ const closeModal = () => {
 
 const onSubmit = async () => {
   loading.value = true;
-  const response = await createSection(section.value);
-  if (!response) {
-    loading.value = false;
-    errorLoading.value = 'Ha ocurrido un error al crear la sección';
-    return;
+  if (modalStore.editMode) {
+    const response = await updateSection(section.value);
+    if (!response) { error.value = 'Error al actualizar el pasillo'; loading.value = false; return; }
+  } else {
+    const response = await createSection(section.value);
+    if (!response) {
+      loading.value = false;
+      errorLoading.value = 'Ha ocurrido un error al crear la sección';
+      return;
+    }
   }
   loading.value = false;
   closeModal();
@@ -44,18 +50,37 @@ const onSubmit = async () => {
 
 onBeforeMount(async () => {
   loading.value = true;
-  const response = await getAisles();
 
-  if (!response) {
+  if (modalStore.editMode) {
+    const data = {
+      token: userStore.token,
+      id: modalStore.id,
+    };
+    const response = await getSectionById(data);
+    if (!response) {
+      errorLoading.value = 'Error al obtener la sección';
+      return;
+    }
+    const { pasillo_id: aisle } = response;
+    section.value.aisle = aisle;
+    section.value.name = response.nombre;
+    section.value.description = response.descripccion;
+    section.value.id = response.id;
     loading.value = false;
-    errorLoading.value = 'Ha ocurrido un error al cargar los pasillos';
-    return;
+  } else {
+    const response = await getAisles();
+
+    if (!response) {
+      loading.value = false;
+      errorLoading.value = 'Ha ocurrido un error al cargar los pasillos';
+      return;
+    }
+    aisles.value = response;
+    if (aisles.value.length === 0) {
+      errorLoading.value = 'No hay pasillos registrados';
+    }
+    loading.value = false;
   }
-  aisles.value = response;
-  if (aisles.value.length === 0) {
-    errorLoading.value = 'No hay pasillos registrados';
-  }
-  loading.value = false;
 });
 </script>
 
@@ -88,7 +113,7 @@ onBeforeMount(async () => {
         </fieldset>
       </fieldset>
 
-      <fieldset>
+      <fieldset v-if="!modalStore.editMode">
         <fieldset>
           <label for="rack">Selecciona el pasillo</label>
 
