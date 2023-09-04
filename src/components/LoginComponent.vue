@@ -1,9 +1,9 @@
 <script setup>
 import { ref } from 'vue';
-import ButtonComponent from './ButtonComponent.vue';
-import useModalStore from '../stores/modal';
-import useUserStore from '../stores/user';
-import loginInApi from '../services/auth';
+import ButtonComponent from '@/components/ButtonComponent.vue';
+import useModalStore from '@/stores/modal';
+import useUserStore from '@/stores/user';
+import loginInApi from '@/services/auth';
 
 const modalStore = useModalStore();
 const userStore = useUserStore();

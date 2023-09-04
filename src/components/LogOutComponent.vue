@@ -1,8 +1,8 @@
 <script setup>
 
-import ButtonComponent from './ButtonComponent.vue';
-import useModalStore from '../stores/modal';
-import useUserStore from '../stores/user';
+import ButtonComponent from '@/components/ButtonComponent.vue';
+import useModalStore from '@/stores/modal';
+import useUserStore from '@/stores/user';
 
 const modalStore = useModalStore();
 const userStore = useUserStore();

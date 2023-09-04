@@ -1,7 +1,6 @@
 <!-- eslint-disable import/extensions -->
 <!-- eslint-disable import/no-unresolved -->
 <script setup>
-import { ref } from 'vue';
 import useModalStore from '@/stores/modal';
 import useUserStore from '@/stores/user';
 
