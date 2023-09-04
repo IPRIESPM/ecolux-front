@@ -25,7 +25,7 @@ const onSumit = async (event) => {
   const response = await loginInApi(data);
 
   if (response) {
-    userStore.setToken(response);
+    userStore.setToken(response.token);
     closeModal();
   } else {
     error.value = 'Usuario o contraseña incorrectos';
