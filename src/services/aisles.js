@@ -1,5 +1,6 @@
+const serverPath = 'http://localhost:3030/api/aisles';
 export const getAisles = async () => {
-  const url = 'http://localhost:3030/aisles';
+  const url = serverPath;
   try {
     const response = await fetch(url, {
       method: 'GET',
@@ -24,8 +25,7 @@ export const getAisles = async () => {
 };
 
 export const createAisle = async (data) => {
-  console.log(data);
-  const url = 'http://localhost:3030/aisles';
+  const url = serverPath;
   try {
     const response = await fetch(url, {
       method: 'POST',

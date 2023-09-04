@@ -1,4 +1,4 @@
-const serverPath = 'http://localhost:3030/referencia';
+const serverPath = 'http://localhost:3030/api/referencia';
 
 export const getReferencesFromApi = async (data) => {
   const url = serverPath;

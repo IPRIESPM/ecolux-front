@@ -1,4 +1,4 @@
-const serverPath = 'http://localhost:3030/login';
+const serverPath = 'http://localhost:3030/api/login';
 
 const loginInApi = async (data) => {
   const url = serverPath;
