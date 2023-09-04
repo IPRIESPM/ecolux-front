@@ -14,10 +14,10 @@ const openForm = (text, type) => {
 </script>
 <template>
     <nav v-if="userStore.admin">
-        <a @click="openForm('Nuevo pasillo','aisle')">Pasillos</a>
-        <a @click="openForm('Nueva sección','section')">Secciones</a>
-        <a @click="openForm('Nueva altura','rack')">Alturas</a>
-        <a @click="openForm('Nueva referencia','reference')">Referencias</a>
+        <a @click="openForm('Listado de pasillos','aisle')">Pasillos</a>
+        <a @click="openForm('Secciones','section')">Secciones</a>
+        <a @click="openForm('Alturas','rack')">Alturas</a>
+        <a @click="openForm('Referencias','reference')">Referencias</a>
     </nav>
 </template>
 <style scoped>

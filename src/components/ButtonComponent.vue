@@ -11,10 +11,16 @@ const props = defineProps({
     required: false,
     default: false,
   },
+  delete: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
 });
 </script>
 <template>
     <button class="confirm" v-if="props.confirm">{{ props.title }}</button>
+    <button class="delete" v-else-if="props.delete"> {{ props.title }}</button>
     <button class="cancel" v-else> {{ props.title }}</button>
 </template>
 <style scoped>
@@ -37,6 +43,10 @@ button {
 
     &.cancel {
         color: var(--color-text);
+    }
+    &.delete {
+        background: var(--red);
+        color: var(--color-text-light);
     }
 }
 </style>

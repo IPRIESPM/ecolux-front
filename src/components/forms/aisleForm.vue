@@ -1,11 +1,11 @@
 <!-- eslint-disable import/extensions -->
 <!-- eslint-disable import/no-unresolved -->
 <script setup>
-import { ref } from 'vue';
+import { ref, onBeforeMount } from 'vue';
 import ButtonComponent from '@/components/ButtonComponent.vue';
 import useModalStore from '@/stores/modal';
 import useUserStore from '@/stores/user';
-import { createAisle } from '@/services/aisles';
+import { createAisle, getAisleById, updateAisle } from '@/services/aisles';
 
 const modalStore = useModalStore();
 const userStore = useUserStore();
@@ -28,11 +28,35 @@ const closeModal = () => {
 const onSubmit = async () => {
   loading.value = true;
   error.value = '';
-  const response = await createAisle(aisle.value);
-  if (!response) { error.value = 'Error al crear el pasillo'; loading.value = false; return; }
-  loading.value = false;
+  if (modalStore.editMode) {
+    const response = await updateAisle(aisle.value);
+    if (!response) { error.value = 'Error al actualizar el pasillo'; loading.value = false; return; }
+  } else {
+    const response = await createAisle(aisle.value);
+    if (!response) { error.value = 'Error al crear el pasillo'; loading.value = false; return; }
+  }
   closeModal();
+  loading.value = false;
 };
+
+onBeforeMount(async () => {
+  if (modalStore.editMode) {
+    const data = {
+      token: userStore.token,
+      pasillo_id: modalStore.id,
+    };
+    const response = await getAisleById(data);
+    if (!response) { error.value = 'Error al obtener el pasillo'; return; }
+    const { pasillo_id: id, descripccion, nombre } = response;
+
+    aisle.value = {
+      aisle: nombre,
+      description: descripccion,
+      token: userStore.token,
+      id,
+    };
+  }
+});
 </script>
 
 <template>
@@ -66,7 +90,7 @@ const onSubmit = async () => {
         </fieldset>
       </fieldset>
 
-      <fieldset>
+      <fieldset v-if="!modalStore.editMode">
         <fieldset>
           <label for="nSection">Número de secciones</label>
           <input
@@ -78,7 +102,7 @@ const onSubmit = async () => {
             v-model="aisle.nSections"
           />
         </fieldset>
-        <fieldset>
+        <fieldset v-if="!modalStore.editMode">
           <label for="nRack">Número de alturas</label>
           <input
             type="number"

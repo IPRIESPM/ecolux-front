@@ -5,10 +5,11 @@ import useModalStore from '@/stores/modal';
 import LoginComponent from '@/components/forms/LoginComponent.vue';
 import LogOutComponent from '@/components/LogOutComponent.vue';
 
-import AisleForm from '@/components/forms/aisleForm.vue';
+import AisleForm from '@/components/forms/AisleForm.vue';
 import SectionForm from '@/components/forms/SectionForm.vue';
 import RackForm from '@/components/forms/RackForm.vue';
 import ReferenceForm from '@/components/forms/ReferenceForm.vue';
+import AisleList from './lists/aisleList.vue';
 
 const modalStore = useModalStore();
 
@@ -22,10 +23,14 @@ const modalStore = useModalStore();
       <section class="modal-main">
         <LoginComponent v-if="modalStore.modalType === 'login'" />
         <LogOutComponent v-if="modalStore.modalType === 'logout'" />
-        <AisleForm v-if="modalStore.modalType === 'aisle'" />
-        <SectionForm v-if="modalStore.modalType === 'section'" />
-        <RackForm v-if="modalStore.modalType === 'rack'" />
-        <ReferenceForm v-if="modalStore.modalType === 'reference'" />
+
+        <AisleForm v-if="modalStore.modalType === 'aisleForm'" />
+        <SectionForm v-if="modalStore.modalType === 'sectionForm'" />
+        <RackForm v-if="modalStore.modalType === 'rackForm'" />
+        <ReferenceForm v-if="modalStore.modalType === 'referenceForm'" />
+
+        <AisleList v-if="modalStore.modalType === 'aisle'" />
+
       </section>
     </section>
   </section>
