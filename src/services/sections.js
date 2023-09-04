@@ -1,33 +1,7 @@
-const serverPath = 'http://localhost:3030/api/reference';
+const serverPath = 'http://localhost:3030/api/sections';
 
-export const getReferencesFromApi = async (data) => {
-  const url = serverPath;
-  try {
-    const response = await fetch(url, {
-      method: 'GET',
-      body: JSON.stringify(data),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-
-    if (response.status === 304) {
-      return 304;
-    }
-
-    if (!response.ok) {
-      return false;
-    }
-
-    const responseData = await response.json();
-    return responseData;
-  } catch (error) {
-    return false;
-  }
-};
-
-export const searchReferenceFromApi = async (data) => {
-  const url = `${serverPath}/search/${data}`;
+export const getSectionsByAisleId = async (id) => {
+  const url = `${serverPath}/aisle/${id}`;
   try {
     const response = await fetch(url, {
       method: 'GET',
@@ -35,15 +9,12 @@ export const searchReferenceFromApi = async (data) => {
         'Content-Type': 'application/json',
       },
     });
-
-    if (response.status === 304) {
-      return 304;
-    }
-
     if (!response.ok) {
       return false;
     }
-
+    if (response.status === 304) {
+      return 304;
+    }
     const responseData = await response.json();
     return responseData;
   } catch (error) {
@@ -51,7 +22,10 @@ export const searchReferenceFromApi = async (data) => {
   }
 };
 
-export const createReferenceFromApi = async (data) => {
+export const getSections = async () => {
+};
+
+export const createSection = async (data) => {
   const url = serverPath;
   try {
     const response = await fetch(url, {

@@ -4,9 +4,11 @@
 import { ref } from 'vue';
 import ButtonComponent from './ButtonComponent.vue';
 import useModalStore from '@/stores/modal';
+import useUserStore from '@/stores/user';
 import { createAisle } from '@/services/aisles';
 
 const modalStore = useModalStore();
+const userStore = useUserStore();
 
 const loading = ref(false);
 const error = ref('');
@@ -14,65 +16,95 @@ const error = ref('');
 const aisle = ref({
   aisle: '',
   description: '',
-  sections: '',
-  racks: '',
+  nSections: 0,
+  nRacks: 0,
+  token: userStore.token,
 });
 
 const closeModal = () => {
   modalStore.closeModal();
 };
 
-const submit = async () => {
+const onSubmit = async () => {
   loading.value = true;
+  error.value = '';
   const response = await createAisle(aisle.value);
-  if (response) {
-    closeModal();
-  } else {
-    error.value = 'Error al crear el pasillo';
-  }
-
+  if (!response) error.value = 'Error al crear el pasillo';
   loading.value = false;
+  closeModal();
 };
 </script>
 
 <template>
-  <form @submit.prevent="submit">
+  <form @submit.prevent="onSubmit">
     <section class="error">
       <p v-if="error">{{ error }}</p>
     </section>
-    <fieldset>
+    <section class="spinner" v-if="loading"></section>
+    <section class="data" v-else>
       <fieldset>
-        <label for="aisle">Número</label>
-        <input type="number" name="aisle" id="aisle" placeholder="00" v-bind="aisle.aisle"/>
+        <fieldset>
+          <label for="aisle">Nombre</label>
+          <input
+            type="number"
+            name="aisle"
+            id="aisle"
+            placeholder="00"
+            v-model="aisle.aisle"
+            min="0"
+          />
+        </fieldset>
+        <fieldset>
+          <label for="description">Descripción</label> <br />
+          <input
+            type="text"
+            name="description"
+            id="description"
+            placeholder="Paneles"
+            v-model="aisle.description"
+          />
+        </fieldset>
       </fieldset>
-      <fieldset>
-        <label for="description">Descripción</label> <br />
-        <input type="text"
-        name="description"
-        id="description"
-        placeholder="Paneles"
-        v-bind="aisle.description" />
-      </fieldset>
-    </fieldset>
 
-    <fieldset>
       <fieldset>
-        <label for="section">Número de secciones</label>
-        <input type="number" name="section" id="section" placeholder="00" v-bind="aisle.sections" />
+        <fieldset>
+          <label for="nSection">Número de secciones</label>
+          <input
+            type="number"
+            name="nSection"
+            id="nSection"
+            placeholder="00"
+            min="0"
+            v-model="aisle.nSections"
+          />
+        </fieldset>
+        <fieldset>
+          <label for="nRack">Número de alturas</label>
+          <input
+            type="number"
+            name="nRack"
+            id="nRack"
+            min="0"
+            placeholder="00"
+            v-model="aisle.nRacks"
+          />
+        </fieldset>
       </fieldset>
-      <fieldset>
-        <label for="rack">Número de alturas</label>
-        <input type="number" name="rack" id="rack" placeholder="00" v-bind="aisle.racks"/>
+
+      <fieldset class="buttons">
+        <ButtonComponent :confirm="true" title="Guardar" />
+        <ButtonComponent @click="closeModal" title="Cerrar" />
       </fieldset>
-    </fieldset>
-    <fieldset class="buttons">
-      <ButtonComponent @click="closeModal" :confirm="true" title="Guardar" />
-      <ButtonComponent @click="closeModal" title="Cerrar" />
-    </fieldset>
+    </section>
   </form>
 </template>
 
 <style scoped>
+form {
+  display: grid;
+  place-items: center;
+}
+
 fieldset {
   display: flex;
   align-items: center;

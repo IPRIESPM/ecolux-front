@@ -1,52 +1,130 @@
 <script setup>
+import { onBeforeMount, ref } from 'vue';
 import ButtonComponent from './ButtonComponent.vue';
+
+import { getAisles } from '@/services/aisles';
+import { getSectionsByAisleId } from '@/services/sections';
+import { createRack } from '@/services/racks';
+
 import useModalStore from '@/stores/modal';
+import useUserStore from '@/stores/user';
 
 const modalStore = useModalStore();
+const userStore = useUserStore();
+
+const loading = ref(false);
+const errorLoading = ref(null);
+const aisles = ref([]);
+const sections = ref([]);
+
+const rack = ref({
+  aisle: '',
+  section: '',
+  name: 0,
+  description: '',
+  token: userStore.token,
+});
 
 const closeModal = () => {
   modalStore.closeModal();
 };
 
-const submit = async () => {
-
+const onSubmit = async () => {
+  loading.value = true;
+  const response = await createRack(rack.value);
+  if (!response) {
+    loading.value = false;
+    errorLoading.value = 'Ha ocurrido un error al crear el rack';
+    return;
+  }
+  loading.value = false;
+  closeModal();
 };
+
+const getSection = async () => {
+  loading.value = true;
+  const response = await getSectionsByAisleId(rack.value.aisle);
+  if (!response) {
+    loading.value = false;
+    errorLoading.value = 'Ha ocurrido un error al cargar las secciones';
+    return;
+  }
+  sections.value = response;
+  loading.value = false;
+};
+
+onBeforeMount(async () => {
+  loading.value = true;
+  const response = await getAisles();
+  if (!response) {
+    loading.value = false;
+    errorLoading.value = 'Ha ocurrido un error al cargar los pasillos';
+    return;
+  }
+  aisles.value = response;
+  if (aisles.value.length === 0) {
+    errorLoading.value = 'No hay pasillos registrados';
+  }
+  loading.value = false;
+});
 </script>
 
 <template>
-  <form @submit.prevent="submit">
-    <fieldset>
+  <form @submit.prevent="onSubmit">
+    <section class="spinner" v-if="loading"></section>
+    <section class="error" v-else-if="errorLoading">{{ errorLoading }}</section>
+    <section class="form" @submit.prevent="onSubmit" v-else>
       <fieldset>
-        <label for="aisle">Selecciona el pasillo</label>
-        <select name="aisle" id="aisle">
-          <option value="">Pasillo - 1</option>
-        </select>
+        <fieldset>
+          <label for="aisle">Selecciona el pasillo</label>
+          <select name="aisle" id="aisle" v-model="rack.aisle" @change="getSection">
+            <option value="" disabled selected>Selecciona un pasillo</option>
+            <option v-for="aisle in aisles" :key="aisle.pasillo_id" :value="aisle.pasillo_id">
+              Pasillo - {{ aisle.nombre }}
+            </option>
+          </select>
+        </fieldset>
+
+        <fieldset v-if="sections.length > 0">
+          <label for="section">Selecciona la sección</label>
+          <select name="section" id="section" v-model="rack.section">
+            <option value="" disabled selected>Selecciona una sección</option>
+            <option v-for="section in sections" :key="section.id" :value="section.id">
+              Sección - {{ section.nombre }}
+            </option>
+          </select>
+        </fieldset>
       </fieldset>
       <fieldset>
-        <label for="section">Selecciona la sección</label>
-        <select name="section" id="section">
-          <option value="">Section - 1</option>
-        </select>
+        <fieldset>
+          <label for="aisle">Nombre</label>
+          <input type="number" name="name" id="name" placeholder="00" min="0" v-model="rack.name" />
+        </fieldset>
+        <fieldset>
+          <label for="description">Descripción</label> <br />
+          <input
+            type="text"
+            name="description"
+            id="description"
+            placeholder="Paneles"
+            v-model="rack.description"
+          />
+        </fieldset>
       </fieldset>
-    </fieldset>
-    <fieldset>
-      <fieldset>
-        <label for="aisle">Número</label>
-        <input type="number" name="aisle" id="aisle" placeholder="00" />
-      </fieldset>
-      <fieldset>
-        <label for="description">Descripción</label> <br />
-        <input type="text" name="description" id="description" placeholder="Paneles" />
-      </fieldset>
-    </fieldset>
+    </section>
     <fieldset class="buttons">
-      <ButtonComponent @click="closeModal" :confirm="true" title="Guardar" />
+      <ButtonComponent :confirm="true" title="Guardar" />
       <ButtonComponent @click="closeModal" title="Cerrar" />
     </fieldset>
   </form>
 </template>
 
 <style scoped>
+form {
+  display: grid;
+  place-items: center;
+}
+
 fieldset {
   display: flex;
   align-items: center;
