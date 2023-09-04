@@ -9,6 +9,7 @@ import App from './App.vue';
 import router from './router';
 
 library.add(
+  solidIcons.faSort,
   solidIcons.faCircleUser,
   solidIcons.faAngleDown,
   solidIcons.faBarcode,

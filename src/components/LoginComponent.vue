@@ -17,6 +17,7 @@ const closeModal = () => {
 
 const onSumit = async (event) => {
   event.preventDefault();
+  error.value = '';
   loading.value = true;
   const formData = new FormData(event.target);
   const data = Object.fromEntries(formData);
@@ -34,9 +35,11 @@ const onSumit = async (event) => {
 };
 </script>
 <template>
-  <form @submit.prevent="onSumit">
+
+  <form @submit.prevent="onSumit" >
     <span class="error">{{ error }}</span>
-    <fieldset>
+    <section class="spinner" v-if="loading"></section>
+    <fieldset v-else>
         <label for="password">Contraseña</label>
         <input type="password" name="password" id="password" v-bind="password"/>
     </fieldset>
@@ -48,6 +51,11 @@ const onSumit = async (event) => {
   </form>
 </template>
 <style scoped>
+
+section.spinner {
+
+margin: 0 auto;
+}
 fieldset.buttons{
     display: flex;
     justify-content: space-between;

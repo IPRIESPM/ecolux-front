@@ -7,10 +7,14 @@ const modalStore = useModalStore();
 const closeModal = () => {
   modalStore.closeModal();
 };
+
+const submit = async () => {
+
+};
 </script>
 
 <template>
-  <form>
+  <form @submit.prevent="submit">
     <fieldset>
       <fieldset>
         <label for="aisle">Selecciona el pasillo</label>

@@ -1,3 +1,5 @@
+<!-- eslint-disable import/no-unresolved -->
+<!-- eslint-disable import/extensions -->
 <script setup>
 import ButtonComponent from './ButtonComponent.vue';
 import useModalStore from '@/stores/modal';
