@@ -2,7 +2,7 @@
 <!-- eslint-disable import/extensions -->
 <script setup>
 import { ref, onBeforeMount } from 'vue';
-import ButtonComponent from './ButtonComponent.vue';
+import ButtonComponent from '@/components/ButtonComponent.vue';
 
 import useModalStore from '@/stores/modal';
 import useUserStore from '@/stores/user';

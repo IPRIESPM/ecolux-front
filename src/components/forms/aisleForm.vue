@@ -2,7 +2,7 @@
 <!-- eslint-disable import/no-unresolved -->
 <script setup>
 import { ref } from 'vue';
-import ButtonComponent from './ButtonComponent.vue';
+import ButtonComponent from '@/components/ButtonComponent.vue';
 import useModalStore from '@/stores/modal';
 import useUserStore from '@/stores/user';
 import { createAisle } from '@/services/aisles';

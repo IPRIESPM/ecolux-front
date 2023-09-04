@@ -1,13 +1,14 @@
 <!-- eslint-disable import/extensions -->
 <!-- eslint-disable import/no-unresolved -->
 <script setup>
-import LoginComponent from '@/components//LoginComponent.vue';
 import useModalStore from '@/stores/modal';
+import LoginComponent from '@/components/forms/LoginComponent.vue';
 import LogOutComponent from '@/components/LogOutComponent.vue';
-import AisleForm from '@/components/aisleForm.vue';
-import SectionForm from '@/components/SectionForm.vue';
-import RackForm from '@/components/RackForm.vue';
-import ReferenceForm from '@/components/ReferenceForm.vue';
+
+import AisleForm from '@/components/forms/aisleForm.vue';
+import SectionForm from '@/components/forms/SectionForm.vue';
+import RackForm from '@/components/forms/RackForm.vue';
+import ReferenceForm from '@/components/forms/ReferenceForm.vue';
 
 const modalStore = useModalStore();
 
