@@ -11,11 +11,16 @@ export default defineStore('reference', () => {
     referenceSelected.value = reference;
   };
 
+  const deleteReference = (id) => {
+    referencesList.value = referencesList.value.filter((r) => r.id !== id);
+  };
+
   return {
     referencesList,
     referenceSelected,
     referencesSearch,
     loading,
     selectReference,
+    deleteReference,
   };
 });

@@ -12,12 +12,15 @@ const searching = ref('');
 const searchReference = async () => {
   referenceStore.loading = true;
   const response = await searchReferenceFromApi(searching.value);
-  referenceStore.referencesSearch = response;
+
+  referenceStore.referencesSearch = response.referenceRack;
+  referenceStore.referenceSelected = response.reference;
   referenceStore.loading = false;
 };
 
 </script>
 <template>
+  {{ test }}
   <section class="search">
     <h3>Buscador de referencias</h3>
     <form @submit.prevent="searchReference">

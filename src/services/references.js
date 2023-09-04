@@ -77,3 +77,55 @@ export const createReferenceFromApi = async (data) => {
     return false;
   }
 };
+
+export const deleteReferenceFromApi = async (data) => {
+  const url = `${serverPath}/${data.id}`;
+  try {
+    const response = await fetch(url, {
+      method: 'DELETE',
+      headers: {
+        authorization: `Bearer ${data.token}`,
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (response.status === 304) {
+      return 304;
+    }
+
+    if (!response.ok) {
+      return false;
+    }
+
+    const responseData = await response.json();
+    return responseData;
+  } catch (error) {
+    return false;
+  }
+};
+
+export const deleteReferenceRackFromApi = async (data) => {
+  const url = `http://localhost:3030/api/rackReference/${data.id}`;
+  try {
+    const response = await fetch(url, {
+      method: 'DELETE',
+      headers: {
+        authorization: `Bearer ${data.token}`,
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (response.status === 304) {
+      return 304;
+    }
+
+    if (!response.ok) {
+      return false;
+    }
+
+    const responseData = await response.json();
+    return responseData;
+  } catch (error) {
+    return false;
+  }
+};
