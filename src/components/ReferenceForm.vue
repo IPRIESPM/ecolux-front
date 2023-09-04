@@ -60,6 +60,7 @@ const onSubmit = async () => {
   if (!response) {
     loading.value = false;
     errorLoading.value = 'Ha ocurrido un error al crear la sección';
+    return;
   }
   loading.value = false;
   closeModal();

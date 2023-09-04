@@ -29,7 +29,7 @@ const onSubmit = async () => {
   loading.value = true;
   error.value = '';
   const response = await createAisle(aisle.value);
-  if (!response) error.value = 'Error al crear el pasillo';
+  if (!response) { error.value = 'Error al crear el pasillo'; loading.value = false; return; }
   loading.value = false;
   closeModal();
 };

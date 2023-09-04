@@ -46,7 +46,7 @@ section.modal {
     display: grid;
     place-items: center;
   }
-
+}
   section.modal-body {
     padding: 18px;
     /* width: 80%;
@@ -56,5 +56,5 @@ section.modal {
     background: var(--background, #f7f7f7);
     box-shadow: 4px 3px 4px 4px rgba(0, 0, 0, 0.25);
   }
-}
+
 </style>
