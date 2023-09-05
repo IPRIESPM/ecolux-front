@@ -17,7 +17,7 @@ const openForm = (text, type) => {
         <a @click="openForm('Listado de pasillos','aisle')">Pasillos</a>
         <a @click="openForm('Secciones','section')">Secciones</a>
         <a @click="openForm('Alturas','rack')">Alturas</a>
-        <a @click="openForm('Crear nueva referencia','reference')">Referencias</a>
+        <a @click="openForm('Crear nueva referencia','newReference')">Referencias</a>
     </nav>
 </template>
 <style scoped>

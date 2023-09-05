@@ -1,4 +1,4 @@
-const serverPath = 'http://localhost:3030/api/login';
+const serverPath = 'http://vps-3547869-x.dattaweb.com:3030/api/login';
 
 const loginInApi = async (data) => {
   const url = serverPath;

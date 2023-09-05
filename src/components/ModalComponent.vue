@@ -1,18 +1,19 @@
 <!-- eslint-disable import/extensions -->
 <!-- eslint-disable import/no-unresolved -->
 <script setup>
-import useModalStore from '@/stores/modal';
-import LoginComponent from '@/components/forms/LoginComponent.vue';
-import LogOutComponent from '@/components/LogOutComponent.vue';
+import useModalStore from '../stores/modal';
+import LoginComponent from './forms/LoginComponent.vue';
+import LogOutComponent from './LogOutComponent.vue';
 
-import AisleForm from '@/components/forms/AisleForm.vue';
-import SectionForm from '@/components/forms/SectionForm.vue';
-import RackForm from '@/components/forms/RackForm.vue';
-import ReferenceForm from '@/components/forms/ReferenceForm.vue';
+import AisleForm from './forms/AisleForm.vue';
+import SectionForm from './forms/SectionForm.vue';
+import RackForm from './forms/RackForm.vue';
+import ReferenceForm from './forms/ReferenceForm.vue';
 
-import AisleList from './lists/aisleList.vue';
+import AisleList from './lists/AisleList.vue';
 import SectionsList from './lists/SectionsList.vue';
 import RacksList from './lists/RacksList.vue';
+import NewReferenceForm from './forms/NewReferenceForm.vue';
 
 const modalStore = useModalStore();
 
@@ -31,6 +32,7 @@ const modalStore = useModalStore();
         <SectionForm v-if="modalStore.modalType === 'sectionForm'" />
         <RackForm v-if="modalStore.modalType === 'rackForm'" />
         <ReferenceForm v-if="modalStore.modalType === 'reference'" />
+        <NewReferenceForm v-if="modalStore.modalType === 'newReference'" />
 
         <AisleList v-if="modalStore.modalType === 'aisle'" />
         <SectionsList v-if="modalStore.modalType === 'section'" />

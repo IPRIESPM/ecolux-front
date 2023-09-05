@@ -1,4 +1,4 @@
-const serverPath = 'http://localhost:3030/api/sections';
+const serverPath = 'http://vps-3547869-x.dattaweb.com:3030/api/sections';
 
 export const getSectionsByAisleId = async (id) => {
   const url = `${serverPath}/aisle/${id}`;

@@ -4,8 +4,8 @@
 import {
   ref, onMounted, watch,
 } from 'vue';
-import useModalStore from '@/stores/modal';
-import useUserStore from '@/stores/user';
+import useModalStore from '../stores/modal';
+import useUserStore from '../stores/user';
 
 const modalStore = useModalStore();
 const userStore = useUserStore();

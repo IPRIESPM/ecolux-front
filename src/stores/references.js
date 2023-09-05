@@ -11,8 +11,14 @@ export default defineStore('reference', () => {
     referenceSelected.value = reference;
   };
 
-  const deleteReference = (id) => {
+  const deleteReferenceRack = (id) => {
     referencesList.value = referencesList.value.filter((r) => r.id !== id);
+    referencesSearch.value = referencesSearch.value.filter((r) => r.id !== id);
+  };
+
+  const deleteReference = (id) => {
+    deleteReferenceRack(id);
+    referenceSelected.value = null;
   };
 
   return {
@@ -22,5 +28,6 @@ export default defineStore('reference', () => {
     loading,
     selectReference,
     deleteReference,
+    deleteReferenceRack,
   };
 });

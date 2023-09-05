@@ -1,4 +1,4 @@
-const serverPath = 'http://localhost:3030/api/racks';
+const serverPath = 'http://vps-3547869-x.dattaweb.com:3030/api/racks';
 
 export const getRacks = async () => {
   const url = serverPath;

@@ -20,7 +20,6 @@ const searchReference = async () => {
 
 </script>
 <template>
-  {{ test }}
   <section class="search">
     <h3>Buscador de referencias</h3>
     <form @submit.prevent="searchReference">
