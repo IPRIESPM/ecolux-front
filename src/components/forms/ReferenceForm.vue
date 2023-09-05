@@ -17,7 +17,6 @@ const reference = ref({
   reference: '',
   details: '',
   id: '',
-  // actual date
   date: new Date().toISOString('es').slice(0, 10),
   token: userStore.token,
 });
@@ -47,7 +46,6 @@ onBeforeMount(async () => {
     errorLoading.value = 'Ha ocurrido un error al cargar la referencia';
     return;
   }
-  console.log(response);
   reference.value.id = response.id;
   reference.value.reference = response.referencia;
   reference.value.details = response.detalles;
