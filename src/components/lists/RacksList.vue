@@ -1,7 +1,7 @@
 <!-- eslint-disable no-alert -->
 <script setup>
 import { onBeforeMount, ref } from 'vue';
-import { getSections } from '@/services/sections';
+import { getSectionsByAisleId } from '@/services/sections';
 import { getAisles } from '@/services/aisles';
 import { getRacksBySectionId, deleteRackFromApi } from '@/services/racks';
 import ButtonComponent from '@/components/ButtonComponent.vue';
@@ -27,9 +27,9 @@ const openEditForm = (text, type, id) => {
   modalStore.id = id;
 };
 
-const getSection = async (aisleId) => {
+const getSection = async () => {
   loading.value = true;
-  const response = await getSections(aisleId);
+  const response = await getSectionsByAisleId(selectedData.value.aisle);
   if (!response) {
     loading.value = false;
     error.value = 'Error al cargar las secciones';
