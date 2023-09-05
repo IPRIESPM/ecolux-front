@@ -1,7 +1,7 @@
 <!-- eslint-disable no-alert -->
 <script setup>
 import { onBeforeMount, ref } from 'vue';
-import { getSections, deleteSectionFromApi } from '@/services/sections';
+import { getSectionsByAisleId, deleteSectionFromApi } from '@/services/sections';
 import { getAisles } from '@/services/aisles';
 import ButtonComponent from '@/components/ButtonComponent.vue';
 import useModalStore from '@/stores/modal';
@@ -14,14 +14,15 @@ const loading = ref(false);
 const error = ref('');
 const sections = ref([]);
 const aisles = ref([]);
+const aisleSelected = ref('');
 const openEditForm = (text, type, id) => {
   modalStore.openModal(text, type, true);
   modalStore.id = id;
 };
 
-const getSection = async (aisleId) => {
+const getSection = async () => {
   loading.value = true;
-  const response = await getSections(aisleId);
+  const response = await getSectionsByAisleId(aisleSelected.value);
   if (!response) {
     loading.value = false;
     error.value = 'Error al cargar las secciones';
@@ -78,7 +79,7 @@ onBeforeMount(async () => {
       <a class="buttons header">
         <fieldset>
           <label for="aisle">Selecciona el pasillo</label>
-          <select name="aisle" id="aisle" @change="getSection">
+          <select name="aisle" id="aisle" @change="getSection" v-model="aisleSelected">
             <option value="" disabled selected>Selecciona un pasillo</option>
             <option v-for="aisle in aisles" :key="aisle.pasillo_id" :value="aisle.pasillo_id">
               Pasillo - {{ aisle.nombre }}
@@ -141,17 +142,17 @@ article {
 }
 
 a.buttons {
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    gap: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 1rem;
 }
 
 a.buttons.header {
   justify-content: flex-end;
 }
 
-fieldset{
-    margin: 0;
+fieldset {
+  margin: 0;
 }
 </style>
