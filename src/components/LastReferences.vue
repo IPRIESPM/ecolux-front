@@ -10,7 +10,8 @@ const referencesStore = useReferencesStore();
 
 const updateReferences = async () => {
   const response = await getReferencesFromApi();
-  referencesStore.referencesList = response;
+  const slicedResponse = await response.slice(response.length - 5, response.length);
+  referencesStore.referencesList = slicedResponse;
 };
 
 onBeforeMount(async () => {
@@ -25,7 +26,10 @@ onBeforeMount(async () => {
     <h2>Últimas referencias:</h2>
     <section class="spinner" v-if="loading"></section>
     <ul v-else>
-      <li v-for="reference in referencesStore.referencesList" :key="reference.id">
+      <li
+        v-for="reference in referencesStore.referencesList"
+        :key="reference.id"
+      >
         <font-awesome-icon :icon="['fas', 'barcode']" /> <span>{{ reference.referencia }}</span>
       </li>
     </ul>
@@ -34,12 +38,11 @@ onBeforeMount(async () => {
 
 <style scoped>
 ul {
-    display: flex;
-    gap: 1rem;
+  display: flex;
+  gap: 1rem;
 }
 
 li {
-    font-weight: 600;
-
+  font-weight: 600;
 }
 </style>

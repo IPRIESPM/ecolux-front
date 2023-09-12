@@ -21,6 +21,9 @@ export default defineStore('reference', () => {
     referenceSelected.value = null;
   };
 
+  const addReference = (reference) => {
+    referencesList.value.push(reference);
+  };
   return {
     referencesList,
     referenceSelected,
@@ -29,5 +32,6 @@ export default defineStore('reference', () => {
     selectReference,
     deleteReference,
     deleteReferenceRack,
+    addReference,
   };
 });

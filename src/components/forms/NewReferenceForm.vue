@@ -3,6 +3,7 @@ import { onBeforeMount, ref } from 'vue';
 import ButtonComponent from '@/components/ButtonComponent.vue';
 import useModalStore from '@/stores/modal';
 import useUserStore from '@/stores/user';
+import useReferenceStore from '@/stores/references';
 import { getAisles } from '@/services/aisles';
 import { getSectionsByAisleId } from '@/services/sections';
 import { getRacksBySectionId } from '@/services/racks';
@@ -10,6 +11,7 @@ import { createReferenceFromApi } from '@/services/references';
 
 const userStore = useUserStore();
 const modalStore = useModalStore();
+const referenceStore = useReferenceStore();
 
 const loading = ref(false);
 const aisles = ref([]);
@@ -38,6 +40,7 @@ const getSections = async () => {
     errorLoading.value = 'Ha ocurrido un error al cargar las secciones';
     return;
   }
+
   sections.value = response;
   loading.value = false;
 };
@@ -62,6 +65,11 @@ const onSubmit = async () => {
     errorLoading.value = 'Ha ocurrido un error al crear la sección';
     return;
   }
+  const newReference = {
+    detalles: reference.value.description,
+    referencia: reference.value.name,
+  };
+  referenceStore.addReference(newReference);
   loading.value = false;
   closeModal();
 };
@@ -118,9 +126,9 @@ onBeforeMount(async () => {
       </fieldset>
       <fieldset v-if="reference.rack || reference.rack.length > 0">
         <fieldset>
-          <label for="aisle">Número</label>
+          <label for="aisle">Referencia</label>
           <input
-            type="number"
+            type="text"
             name="reference"
             id="reference"
             placeholder="00"

@@ -60,9 +60,9 @@ onBeforeMount(async () => {
     <section class="form" v-else>
       <fieldset v-if="reference">
         <fieldset>
-          <label for="reference">Número</label>
+          <label for="reference">Referencia</label>
           <input
-            type="number"
+            type="text"
             name="reference"
             id="reference"
             placeholder="00"
@@ -78,15 +78,6 @@ onBeforeMount(async () => {
             id="description"
             placeholder="Paneles"
             v-model="reference.details"
-          />
-        </fieldset>
-        <fieldset>
-          <label for="date">Fecha</label> <br />
-          <input
-            type="date"
-            name="date"
-            id="date"
-            v-model="reference.date"
           />
         </fieldset>
       </fieldset>
