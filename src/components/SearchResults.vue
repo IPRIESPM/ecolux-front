@@ -85,6 +85,7 @@ const deleteReference = async (id) => {
       v-if="referenceStore.referencesSearch && referenceStore.referencesSearch.length > 0"
     >
       <section class="header">
+        <a>Partida <font-awesome-icon :icon="['fas', 'sort']" /></a>
         <a>Fecha <font-awesome-icon :icon="['fas', 'sort']" /></a>
         <a>Pasillo <font-awesome-icon :icon="['fas', 'sort']" /></a>
         <a>Sección <font-awesome-icon :icon="['fas', 'sort']" /></a>
@@ -93,6 +94,7 @@ const deleteReference = async (id) => {
       </section>
       <section class="body">
         <article v-for="reference in referenceStore.referencesSearch" :key="reference.id">
+          <a>{{ reference.partida }}</a>
           <a>
             {{
               reference.fecha_creacion
@@ -137,7 +139,7 @@ section.search-results {
 section.header,
 article {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   gap: 1rem;
 }
 

@@ -71,6 +71,7 @@ onBeforeMount(async () => {
   loading.value = false;
 });
 </script>
+
 <template>
   <section class="pasillos">
     <section class="spinner" v-if="loading"></section>

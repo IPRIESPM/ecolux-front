@@ -25,6 +25,7 @@ const reference = ref({
   rack: '',
   name: '',
   description: '',
+  departure: '',
   token: userStore.token,
 });
 
@@ -126,11 +127,31 @@ onBeforeMount(async () => {
       </fieldset>
       <fieldset v-if="reference.rack || reference.rack.length > 0">
         <fieldset>
+          <label for="departure">Partida</label> <br />
+          <input
+            type="text"
+            name="departure"
+            id="departure"
+            class="small-input"
+            v-model="reference.departure"
+          />
+        </fieldset>
+        <fieldset>
+          <label for="date">Fecha</label> <br />
+          <input
+            type="date"
+            name="date"
+            id="date"
+            v-model="reference.date"
+          />
+        </fieldset>
+        <fieldset>
           <label for="aisle">Referencia</label>
           <input
             type="text"
             name="reference"
             id="reference"
+            class="small-input"
             placeholder="00"
             min="0"
             v-model="reference.name"
@@ -146,15 +167,7 @@ onBeforeMount(async () => {
             v-model="reference.description"
           />
         </fieldset>
-        <fieldset>
-          <label for="date">Fecha</label> <br />
-          <input
-            type="date"
-            name="date"
-            id="date"
-            v-model="reference.date"
-          />
-        </fieldset>
+
       </fieldset>
     </section>
     <fieldset class="buttons">
@@ -184,6 +197,9 @@ fieldset {
 
   input[type='number'] {
     width: 50px;
+  }
+  input.small-input {
+    width: 80px;
   }
 }
 </style>
