@@ -29,11 +29,13 @@ nav {
     background:var(--gray);
     padding: 0rem 3rem;
     height: 48px;
-    font-weight: 600;
+    font-weight: 700;
+
     + :hover{
         text-decoration: underline;
     }
-    a{
+
+    & a{
         cursor: pointer;
     }
 }

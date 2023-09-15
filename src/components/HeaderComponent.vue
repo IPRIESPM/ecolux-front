@@ -1,5 +1,3 @@
-<!-- eslint-disable import/extensions -->
-<!-- eslint-disable import/no-unresolved -->
 <script setup>
 import {
   ref, onMounted, watch,
@@ -61,8 +59,8 @@ header {
 
     border-bottom: 12px solid var(--orange);
 
-    section.user{
-        font-size: 1.6rem;
+   & section.user{
+        font-size: var(--step-1);
         display: flex;
         gap: 1.3rem;
         justify-content: center;

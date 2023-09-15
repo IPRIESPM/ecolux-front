@@ -37,6 +37,9 @@ onBeforeMount(async () => {
 </template>
 
 <style scoped>
+h2{
+  margin: 1.5rem 0;
+}
 ul {
   display: flex;
   gap: 1rem;

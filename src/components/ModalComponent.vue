@@ -54,16 +54,14 @@ section.modal {
   place-items: center;
 
   background: #f7f7f7c2;
-
-  section.modal-header {
+  & section.modal-header {
     display: grid;
     place-items: center;
+    margin-bottom: 1.5rem;
   }
 }
   section.modal-body {
     padding: 18px;
-    /* width: 80%;
-    height: 80%; */
     background: var(--gray);
     border-radius: var(--border-radius, 6px);
     background: var(--background, #f7f7f7);
