@@ -57,7 +57,7 @@ section.modal {
   & section.modal-header {
     display: grid;
     place-items: center;
-    margin-top: 1rem;
+    margin-top: 0.8rem;
     margin-bottom: 1.5rem;
   }
 }
