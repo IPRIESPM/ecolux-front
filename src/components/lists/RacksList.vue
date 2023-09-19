@@ -69,6 +69,7 @@ const deleteRack = async (id) => {
     token: userStore.token,
   };
   loading.value = true;
+
   const response = await deleteRackFromApi(data);
   if (!response) {
     error.value = 'Error al borrar la altura';

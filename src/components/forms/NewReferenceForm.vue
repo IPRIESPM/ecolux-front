@@ -186,10 +186,10 @@ fieldset {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: min-content;
   gap: 12px;
+  height: min-content;
 
-  fieldset {
+  & fieldset {
     display: flex;
     flex-direction: column;
     gap: 0;
@@ -198,6 +198,7 @@ fieldset {
   input[type='number'] {
     width: 50px;
   }
+
   input.small-input {
     width: 80px;
   }

@@ -11,6 +11,7 @@ const userStore = useUserStore();
 const password = ref('');
 const error = ref('');
 const loading = ref(false);
+
 const closeModal = () => {
   modalStore.closeModal();
 };
@@ -51,13 +52,12 @@ const onSumit = async (event) => {
   </form>
 </template>
 <style scoped>
-
 section.spinner {
-
-margin: 0 auto;
+  margin: 0 auto;
 }
+
 fieldset.buttons{
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 </style>

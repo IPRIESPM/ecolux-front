@@ -1,5 +1,3 @@
-<!-- eslint-disable import/extensions -->
-<!-- eslint-disable import/no-unresolved -->
 <script setup>
 import { ref, onBeforeMount } from 'vue';
 import ButtonComponent from '@/components/ButtonComponent.vue';
@@ -133,10 +131,10 @@ fieldset {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: min-content;
   gap: 12px;
+  height: min-content;
 
-  fieldset {
+  & fieldset {
     display: flex;
     flex-direction: column;
     gap: 0;
