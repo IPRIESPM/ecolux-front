@@ -6,19 +6,17 @@
   --blue:#427ED1;
   --gray:#EBEBEB;
   --white:#f7f7f7;
-
   --color-text: var(--black);
   --color-background: var(--white);
-
   --color-text-light: var(--gray);
-
   --border-radius: 6px;
 }
+
 body {
   margin: 0;
   padding: 0;
   min-height: 100vh;
-  color: var(--color-text);
   background: var(--color-background);
+  color: var(--color-text);
   transition: color 0.5s, background-color 0.5s;
 }
