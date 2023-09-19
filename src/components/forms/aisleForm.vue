@@ -126,18 +126,4 @@ form {
   display: grid;
   place-items: center;
 }
-
-fieldset {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  height: min-content;
-
-  & fieldset {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-  }
-}
 </style>

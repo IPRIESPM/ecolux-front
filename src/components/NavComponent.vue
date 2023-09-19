@@ -26,9 +26,9 @@ nav {
     justify-content: flex-end;
     align-items: center;
     gap: 23px;
-    background:var(--gray);
-    padding: 0rem 3rem;
     height: 48px;
+    padding: 0 3rem;
+    background:var(--gray);
     font-weight: 700;
 
     + :hover{

@@ -1,5 +1,3 @@
-<!-- eslint-disable import/extensions -->
-<!-- eslint-disable import/no-unresolved -->
 <script setup>
 import { onBeforeMount, ref } from 'vue';
 import { getReferencesFromApi } from '@/services/references';

@@ -30,6 +30,6 @@ const searchReference = async () => {
 
 <style scoped>
 section.search {
-    text-align: center;
+  text-align: center;
 }
 </style>

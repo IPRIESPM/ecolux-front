@@ -34,13 +34,16 @@ const deleteAisle = async (aisleId) => {
     pasillo_id: aisleId,
     token: userStore.token,
   };
+
   loading.value = true;
   const response = await deleteAisleFromApi(data);
+
   if (!response) {
     error.value = 'Error al borrar el pasillo';
     loading.value = false;
     return;
   }
+
   loading.value = false;
   aisles.value = aisles.value.filter((aisle) => aisle.pasillo_id !== aisleId);
 };
@@ -98,13 +101,14 @@ section.pasillos {
 }
 
 section.header {
-  margin: 1.3rem 0rem;
+  margin: 1.3rem 0;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 1rem;
+  margin-bottom: 15px;
   text-align: center;
 
-  a {
+  & a {
     font-weight: 700;
   }
 }
@@ -113,8 +117,8 @@ article {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 1rem;
-  text-align: center;
   margin-bottom: 15px;
+  text-align: center;
 }
 
 a.buttons {

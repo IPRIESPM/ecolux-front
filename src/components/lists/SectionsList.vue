@@ -1,4 +1,3 @@
-<!-- eslint-disable no-alert -->
 <script setup>
 import { onBeforeMount, ref } from 'vue';
 import { getSectionsByAisleId, deleteSectionFromApi } from '@/services/sections';
@@ -129,7 +128,7 @@ section.header {
   gap: 1rem;
   text-align: center;
 
-  a {
+  & a {
     font-weight: 700;
   }
 }
@@ -138,8 +137,8 @@ article {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 1rem;
-  text-align: center;
   margin-bottom: 15px;
+  text-align: center;
 }
 
 a.buttons {

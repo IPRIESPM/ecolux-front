@@ -128,10 +128,10 @@ section.search-results {
   justify-content: center;
   align-items: center;
 
-  section {
+  & section {
     margin-bottom: 2rem;
   }
-  section.wrapper {
+  & section.wrapper {
     text-align: center;
   }
 }

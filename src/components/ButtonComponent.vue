@@ -27,13 +27,10 @@ const props = defineProps({
 button {
     padding: 10px 24px;
     border-radius: 6px;
-    border: none;
+    border: 1px solid rgba(66 66 66 / 30%);
     color: var(--color-text);
     font-weight: 500;
-
-    border: 1px solid rgba(66, 66, 66, 0.30);
-    box-shadow: 1px 1px 0px 0px rgba(0, 0, 0, 0.25);
-
+    box-shadow: 1px 1px 0 0 rgba(0 0 0 / 25%);
     cursor: pointer;
 
     &.confirm {

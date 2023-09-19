@@ -48,23 +48,20 @@ watch(() => userStore.admin, () => {
 </template>
 <style scoped>
 header {
-
+    padding: 2rem 3rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 2rem 3rem;
-
+    border-bottom: 12px solid var(--orange);
     background:var(--black-secondary);
     color: var(--color-text-light);
 
-    border-bottom: 12px solid var(--orange);
-
    & section.user{
-        font-size: var(--step-1);
         display: flex;
         gap: 1.3rem;
         justify-content: center;
         align-items: center;
+        font-size: var(--step-1);
         cursor: pointer;
     }
 }

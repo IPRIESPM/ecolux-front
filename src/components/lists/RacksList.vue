@@ -1,4 +1,3 @@
-<!-- eslint-disable no-alert -->
 <script setup>
 import { onBeforeMount, ref } from 'vue';
 import { getSectionsByAisleId } from '@/services/sections';
@@ -146,19 +145,20 @@ onBeforeMount(async () => {
   </section>
 </template>
 <style scoped>
+
 section.pasillos {
   display: grid;
   place-items: center;
 }
 
 section.header {
-  margin: 1.3rem 0rem;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 1rem;
+  margin: 1.3rem 0;
   text-align: center;
 
-  a {
+  & a {
     font-weight: 700;
   }
 }
@@ -167,15 +167,15 @@ article {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 1rem;
-  text-align: center;
   margin-bottom: 15px;
+  text-align: center;
 }
 
 a.buttons {
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    gap: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 1rem;
 }
 
 a.buttons.header {
@@ -183,6 +183,6 @@ a.buttons.header {
 }
 
 fieldset{
-    margin: 0;
+  margin: 0;
 }
 </style>

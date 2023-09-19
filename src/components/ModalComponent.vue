@@ -65,7 +65,7 @@ section.modal {
     background: var(--gray);
     border-radius: var(--border-radius, 6px);
     background: var(--background, #f7f7f7);
-    box-shadow: 4px 3px 4px 4px rgba(0, 0, 0, 0.25);
+    box-shadow: 4px 3px 4px 4px rgba(0 0 0 / 25%);
   }
 
 </style>

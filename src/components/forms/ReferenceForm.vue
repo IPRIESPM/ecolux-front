@@ -94,21 +94,8 @@ form {
   display: grid;
   place-items: center;
 }
-fieldset {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: min-content;
-  gap: 12px;
 
-  fieldset {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-  }
-
-  input[type='number'] {
-    width: 50px;
-  }
+fieldset input[type='number'] {
+  width: 50px;
 }
 </style>
