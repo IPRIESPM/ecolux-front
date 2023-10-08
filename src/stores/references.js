@@ -24,6 +24,15 @@ export default defineStore('reference', () => {
   const addReference = (reference) => {
     referencesList.value.push(reference);
   };
+  const updateReferenceSearch = (updateReferences) => {
+    referencesSearch.value = referencesSearch.value.map((reference) => {
+      if (reference.id === updateReferences.id) {
+        return updateReferences;
+      }
+      return reference;
+    });
+  };
+
   return {
     referencesList,
     referenceSelected,
@@ -33,5 +42,6 @@ export default defineStore('reference', () => {
     deleteReference,
     deleteReferenceRack,
     addReference,
+    updateReferenceSearch,
   };
 });

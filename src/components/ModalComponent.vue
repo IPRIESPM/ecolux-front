@@ -14,6 +14,7 @@ import AisleList from './lists/AisleList.vue';
 import SectionsList from './lists/SectionsList.vue';
 import RacksList from './lists/RacksList.vue';
 import NewReferenceForm from './forms/NewReferenceForm.vue';
+import EditReferenceRack from './forms/EditReferenceRack.vue';
 
 const modalStore = useModalStore();
 
@@ -33,6 +34,7 @@ const modalStore = useModalStore();
         <RackForm v-if="modalStore.modalType === 'rackForm'" />
         <ReferenceForm v-if="modalStore.modalType === 'reference'" />
         <NewReferenceForm v-if="modalStore.modalType === 'newReference'" />
+        <EditReferenceRack v-if="modalStore.modalType === 'editReferenceRack'" />
 
         <AisleList v-if="modalStore.modalType === 'aisle'" />
         <SectionsList v-if="modalStore.modalType === 'section'" />

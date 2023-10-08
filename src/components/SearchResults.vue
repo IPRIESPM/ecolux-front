@@ -19,6 +19,13 @@ const openModal = () => {
   modalStore.openModal(text, type, true);
 };
 
+const editReferenceRack = (id) => {
+  const text = 'Editar la posición de la referencia';
+  const type = 'editReferenceRack';
+  modalStore.openModal(text, type, true);
+  referenceStore.referenceSelected = id;
+};
+
 const deleteReferenceRack = async (id) => {
   error.value = '';
   const checkConfirm = window.confirm('¿Estas seguro de borrar esta referencia?');
@@ -85,16 +92,17 @@ const deleteReference = async (id) => {
       v-if="referenceStore.referencesSearch && referenceStore.referencesSearch.length > 0"
     >
       <section class="header">
-        <a>Partida <font-awesome-icon :icon="['fas', 'sort']" /></a>
-        <a>Fecha <font-awesome-icon :icon="['fas', 'sort']" /></a>
-        <a>Pasillo <font-awesome-icon :icon="['fas', 'sort']" /></a>
-        <a>Sección <font-awesome-icon :icon="['fas', 'sort']" /></a>
-        <a>Altura <font-awesome-icon :icon="['fas', 'sort']" /></a>
+        <!-- <font-awesome-icon :icon="['fas', 'sort']" /> -->
+        <a>Fecha</a>
+        <a>Partida</a>
+        <a>Stock</a>
+        <a>Pasillo</a>
+        <a>Sección </a>
+        <a>Altura</a>
         <a v-if="userStore.admin">Opciones</a>
       </section>
       <section class="body">
         <article v-for="reference in referenceStore.referencesSearch" :key="reference.id">
-          <a>{{ reference.partida }}</a>
           <a>
             {{
               reference.fecha_creacion
@@ -102,7 +110,8 @@ const deleteReference = async (id) => {
                 : '-'
             }}
           </a>
-
+          <a>{{ reference.partida }}</a>
+          <a>{{ reference.cantidad ?? "-" }}</a>
           <a>{{ reference.pasillo_nombre }}</a>
           <a>{{ reference.seccion_nombre }}</a>
           <a>{{ reference.altura_nombre }}</a>
@@ -111,6 +120,11 @@ const deleteReference = async (id) => {
               title="Borrar"
               :delete="true"
               @click="deleteReferenceRack(reference.id_referencia_altura)"
+            />
+            <ButtonComponent
+              title="Editar"
+              :confirm="true"
+              @click="editReferenceRack(reference.id_referencia_altura)"
             />
           </a>
         </article>
@@ -139,7 +153,7 @@ section.search-results {
 section.header,
 article {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(7, 1fr);
   gap: 1rem;
 }
 

@@ -127,6 +127,18 @@ onBeforeMount(async () => {
       </fieldset>
       <fieldset v-if="reference.rack || reference.rack.length > 0">
         <fieldset>
+          <label for="aisle">Referencia</label>
+          <input
+            type="text"
+            name="reference"
+            id="reference"
+            class="small-input"
+            placeholder="00"
+            min="0"
+            v-model="reference.name"
+          />
+        </fieldset>
+        <fieldset>
           <label for="departure">Partida</label> <br />
           <input
             type="text"
@@ -145,18 +157,7 @@ onBeforeMount(async () => {
             v-model="reference.date"
           />
         </fieldset>
-        <fieldset>
-          <label for="aisle">Referencia</label>
-          <input
-            type="text"
-            name="reference"
-            id="reference"
-            class="small-input"
-            placeholder="00"
-            min="0"
-            v-model="reference.name"
-          />
-        </fieldset>
+
         <fieldset>
           <label for="description">Descripción</label> <br />
           <input
